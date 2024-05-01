@@ -4,7 +4,9 @@ class_name PlayerWalking
 @export var walk_speed : int = 350
 
 @export var animator : AnimationTree
+@export var effect_animator : AnimationTree
 @onready var anim_state_machine : AnimationNodeStateMachinePlayback = animator.get("parameters/playback")
+
 
 func Enter():
 	anim_state_machine.travel("Walk")
@@ -18,9 +20,10 @@ func Update(_delta: float):
 		animator.set("parameters/Walk/blend_position", input_direction)
 		animator.set("parameters/Attack/blend_position", input_direction)
 		animator.set("parameters/Stunned/blend_position", input_direction)
-		player.move_and_slide()
+		effect_animator.set("parameters/Attack/blend_position", input_direction)
 	else:
 		state_transition.emit(self, "idle")
+	player.move_and_slide()
 
 	if Input.is_action_just_pressed("attack"):
 		state_transition.emit(self, "attack")
