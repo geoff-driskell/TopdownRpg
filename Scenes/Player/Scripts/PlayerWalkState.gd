@@ -21,9 +21,9 @@ func Update(_delta: float):
 		animator.set("parameters/Attack/blend_position", input_direction)
 		animator.set("parameters/Stunned/blend_position", input_direction)
 		effect_animator.set("parameters/Attack/blend_position", input_direction)
-		player.move_and_slide()
 	else:
 		state_transition.emit(self, "idle")
+	player.move_and_slide()
 
 	if Input.is_action_just_pressed("attack"):
 		state_transition.emit(self, "attack")

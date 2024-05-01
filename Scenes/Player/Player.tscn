@@ -1,9 +1,10 @@
-[gd_scene load_steps=73 format=3 uid="uid://d3jehmshpb6ys"]
+[gd_scene load_steps=74 format=3 uid="uid://d3jehmshpb6ys"]
 
 [ext_resource type="Texture2D" uid="uid://ctefx34xemulw" path="res://Scenes/Player/Sprites/PlayerSprite02.png" id="1_5vwix"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_ym11r"]
 [ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="2_jymyp"]
 [ext_resource type="Texture2D" uid="uid://dg0ee2x2fgqyd" path="res://Scenes/Player/Sprites/AttackSprite01.png" id="3_d6mmc"]
+[ext_resource type="Texture2D" uid="uid://cn5x3x8qhk82j" path="res://Scenes/Player/Sprites/Shadow.png" id="3_lgar6"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/PlayerIdleState.gd" id="3_rxqg0"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/PlayerWalkState.gd" id="4_n3dhp"]
 [ext_resource type="Script" path="res://Scenes/Player/Scripts/PlayerAttackState.gd" id="6_1ijid"]
@@ -1030,6 +1031,12 @@ texture = ExtResource("1_5vwix")
 hframes = 16
 vframes = 3
 
+[node name="ShadowSprite" type="Sprite2D" parent="Sprite2D"]
+modulate = Color(0, 0, 0, 0.784314)
+show_behind_parent = true
+texture = ExtResource("3_lgar6")
+offset = Vector2(0, 20)
+
 [node name="AttackEffectSprite" type="Sprite2D" parent="Sprite2D"]
 position = Vector2(0, 10)
 texture = ExtResource("3_d6mmc")
@@ -1088,6 +1095,7 @@ animator = NodePath("../../AnimationTree")
 effect_animator = NodePath("../../Sprite2D/AttackEffectSprite/EffectTree")
 audio_player = NodePath("../../AudioStreamPlayer2D")
 attack_sound = ExtResource("8_d0qos")
+decelerate_speed = 2.5
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 max_polyphony = 4
