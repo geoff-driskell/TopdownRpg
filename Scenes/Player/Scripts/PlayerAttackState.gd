@@ -2,12 +2,15 @@ extends State
 class_name PlayerAttack
 
 @export var animator : AnimationTree
+@export var effect_animator : AnimationTree
 @onready var anim_state_machine : AnimationNodeStateMachinePlayback = animator.get("parameters/playback")
+@onready var effect_state_machine : AnimationNodeStateMachinePlayback = effect_animator.get("parameters/playback")
 
 var attacking : bool
 
 func Enter() -> void:
 	anim_state_machine.travel("Attack")
+	effect_state_machine.travel("Attack")
 	animator.animation_finished.connect(EndAttack)
 	attacking = true
 
