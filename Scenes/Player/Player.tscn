@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=3 uid="uid://d3jehmshpb6ys"]
+[gd_scene load_steps=80 format=3 uid="uid://d3jehmshpb6ys"]
 
 [ext_resource type="Texture2D" uid="uid://ctefx34xemulw" path="res://Scenes/Player/Sprites/PlayerSprite02.png" id="1_5vwix"]
 [ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_ym11r"]
@@ -331,7 +331,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_mljjf"]
 resource_name = "attack_none"
-length = 0.01
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -388,7 +388,6 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dtn6d"]
 switch_mode = 2
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_vob2j"]
 states/Attack/node = SubResource("AnimationNodeBlendSpace2D_1ir0g")
@@ -925,6 +924,7 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_1urit")
 blend_point_2/pos = Vector2(0, -1)
 blend_point_3/node = SubResource("AnimationNodeAnimation_fcxk7")
 blend_point_3/pos = Vector2(-1, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tspbc"]
 animation = &"idle_down"
@@ -970,6 +970,7 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_1c3ej")
 blend_point_2/pos = Vector2(0, -1)
 blend_point_3/node = SubResource("AnimationNodeAnimation_i1xxm")
 blend_point_3/pos = Vector2(-1, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jy472"]
 animation = &"walk_down"
@@ -992,6 +993,7 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_02mau")
 blend_point_2/pos = Vector2(0, -1)
 blend_point_3/node = SubResource("AnimationNodeAnimation_7cxwx")
 blend_point_3/pos = Vector2(-1, 0)
+blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gsisc"]
 advance_mode = 2
@@ -1004,13 +1006,23 @@ advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_thagl"]
 switch_mode = 2
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_1ibxt"]
 switch_mode = 2
-advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xw8a8"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4qyxd"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_48swn"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_dorv3"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_sj06w"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_yjt4q"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_gkp6x"]
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_qsn27"]
 states/Attack/node = SubResource("AnimationNodeBlendSpace2D_1orwu")
@@ -1021,9 +1033,13 @@ states/Stunned/node = SubResource("AnimationNodeBlendSpace2D_oso8d")
 states/Stunned/position = Vector2(497, 216)
 states/Walk/node = SubResource("AnimationNodeBlendSpace2D_hqlfp")
 states/Walk/position = Vector2(642.5, 101)
-transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gsisc"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_2oew6"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_k26q6"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_8wxln"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_thagl"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_1ibxt"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_xw8a8")]
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gsisc"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_2oew6"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_k26q6"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_8wxln"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_thagl"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_1ibxt"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_xw8a8"), "Idle", "Stunned", SubResource("AnimationNodeStateMachineTransition_4qyxd"), "Walk", "Stunned", SubResource("AnimationNodeStateMachineTransition_48swn"), "Attack", "Stunned", SubResource("AnimationNodeStateMachineTransition_dorv3"), "Stunned", "Attack", SubResource("AnimationNodeStateMachineTransition_sj06w"), "Stunned", "Walk", SubResource("AnimationNodeStateMachineTransition_yjt4q"), "Stunned", "Idle", SubResource("AnimationNodeStateMachineTransition_gkp6x")]
+graph_offset = Vector2(-66, -10)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 16
+motion_mode = 1
+wall_min_slide_angle = 0.174533
 script = ExtResource("1_ym11r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -1046,7 +1062,6 @@ hframes = 12
 libraries = {
 "": SubResource("AnimationLibrary_x7vpd")
 }
-autoplay = "attack_none"
 
 [node name="EffectTree" type="AnimationTree" parent="Sprite2D/AttackEffectSprite"]
 libraries = {
@@ -1071,8 +1086,8 @@ libraries = {
 }
 tree_root = SubResource("AnimationNodeStateMachine_qsn27")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Attack/blend_position = Vector2(0.00157475, 0.252137)
-parameters/Idle/blend_position = Vector2(0.00314963, 0.971084)
+parameters/Attack/blend_position = Vector2(0, 0.196581)
+parameters/Idle/blend_position = Vector2(0, 0.363248)
 parameters/Stunned/blend_position = Vector2(-0.00314963, 0.175214)
 parameters/Walk/blend_position = Vector2(-0.000787377, 0.303419)
 
@@ -1095,7 +1110,6 @@ animator = NodePath("../../AnimationTree")
 effect_animator = NodePath("../../Sprite2D/AttackEffectSprite/EffectTree")
 audio_player = NodePath("../../AudioStreamPlayer2D")
 attack_sound = ExtResource("8_d0qos")
-decelerate_speed = 2.5
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 max_polyphony = 4

@@ -24,4 +24,5 @@ func Exit():
 
 func EndAttack(_new_anim_name : String):
 	attacking = false
+	effect_state_machine.travel("attack_none")
 	state_transition.emit(self, "idle")
