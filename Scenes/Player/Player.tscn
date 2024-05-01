@@ -1,6 +1,11 @@
-[gd_scene load_steps=49 format=3 uid="uid://d3jehmshpb6ys"]
+[gd_scene load_steps=54 format=3 uid="uid://d3jehmshpb6ys"]
 
 [ext_resource type="Texture2D" uid="uid://ctefx34xemulw" path="res://Scenes/Player/Sprites/PlayerSprite02.png" id="1_5vwix"]
+[ext_resource type="Script" path="res://Scenes/Player/Player.gd" id="1_ym11r"]
+[ext_resource type="Script" path="res://Scripts/FiniteStateMachine.gd" id="2_jymyp"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/PlayerIdleState.gd" id="3_rxqg0"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/PlayerWalkState.gd" id="4_n3dhp"]
+[ext_resource type="Script" path="res://Scenes/Player/Scripts/PlayerAttackState.gd" id="6_1ijid"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bg6wb"]
 size = Vector2(33, 49)
@@ -629,37 +634,45 @@ states/Walk/position = Vector2(642.5, 101)
 transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_gsisc"), "Idle", "Walk", SubResource("AnimationNodeStateMachineTransition_2oew6"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_k26q6"), "Walk", "Attack", SubResource("AnimationNodeStateMachineTransition_8wxln"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_thagl"), "Attack", "Walk", SubResource("AnimationNodeStateMachineTransition_1ibxt"), "Walk", "Idle", SubResource("AnimationNodeStateMachineTransition_xw8a8")]
 
 [node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ym11r")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_5vwix")
 hframes = 16
 vframes = 3
-frame = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1.5, -2.5)
 shape = SubResource("RectangleShape2D_bg6wb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("")
 libraries = {
 "": SubResource("AnimationLibrary_plns7")
 }
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
-root_node = NodePath("")
 libraries = {
 "": SubResource("AnimationLibrary_plns7")
 }
 tree_root = SubResource("AnimationNodeStateMachine_qsn27")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Attack/blend_position = Vector2(0.00157475, 0.252137)
-parameters/Idle/blend_position = Vector2(0.000787377, 0.764957)
+parameters/Idle/blend_position = Vector2(0.00314963, 0.971084)
 parameters/Stunned/blend_position = Vector2(-0.00314963, 0.175214)
 parameters/Walk/blend_position = Vector2(-0.000787377, 0.303419)
 
-[node name="_AnimationPlayer_20234" type="AnimationPlayer" parent="."]
-root_node = NodePath("")
-libraries = {
-"": SubResource("AnimationLibrary_plns7")
-}
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_jymyp")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animator")]
+script = ExtResource("3_rxqg0")
+animator = NodePath("../../AnimationTree")
+
+[node name="Walk" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animator")]
+script = ExtResource("4_n3dhp")
+animator = NodePath("../../AnimationTree")
+
+[node name="Attack" type="Node" parent="FiniteStateMachine" node_paths=PackedStringArray("animator")]
+script = ExtResource("6_1ijid")
+animator = NodePath("../../AnimationTree")

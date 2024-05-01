@@ -9,14 +9,19 @@ var current_state : State
 	# everything that uses a state machine!
 
 func _ready():
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+func Initialize(_player : CharacterBody2D):
 	for child in get_children():
 		if child is State:
 			states[child.name.to_lower()] = child
+			child.player = _player
 			child.state_transition.connect(change_state)
 
 	if initial_state:
 		initial_state.Enter()
 		current_state = initial_state
+	process_mode = Node.PROCESS_MODE_INHERIT
 
 #Call the current states update function continuosly
 func _process(delta):
